@@ -32,8 +32,14 @@ public class WordManager {
             if(menu == 4) {
                 wordCRUD.addWord();
             }
-            else if(menu ==1) {
+            else if(menu == 1) {
                 wordCRUD.listAll();
+            }
+            else if(menu == 5) {
+                wordCRUD.updateWord();
+            }
+            else if(menu == 6) {
+                wordCRUD.deleteWord();
             }
         }
         System.out.println("프로그램 종료! 다음에 만나요~");
