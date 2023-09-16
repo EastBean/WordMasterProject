@@ -1,5 +1,6 @@
 package com.mycom.word;
 
+import java.io.*;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -95,5 +96,44 @@ public class WordCRUD implements ICRUD{
         }
         System.out.println("--------------------------------");
         return idlist;
+    }
+
+    public void loadFile() {
+        try {
+            BufferedReader myBufferedReader = new BufferedReader(new FileReader("Dictionary.txt"));
+            String line;
+            int count = 0;
+
+            while(true) {
+                line = myBufferedReader.readLine();
+                if(line == null) break;
+
+                String[] data = line.split("\\|");
+                int level = Integer.parseInt(data[0]);
+                String word = data[1];
+                String meaning = data[2];
+                list.add(new Word(0, level, word, meaning));
+                count++;
+            }
+            myBufferedReader.close();
+            System.out.println("==> " + count + "개 로딩 완료!!!");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void saveFile() {
+        try {
+            PrintWriter myPrintWriter = new PrintWriter("Dictionary.txt");
+            for(Word word : list) {
+                myPrintWriter.println(word.getLevel() + "|" + word.getWord() + "|" + word.getMeaning());
+            }
+            myPrintWriter.close();
+            System.out.println("==> 데이터 저장 완료 !!!");
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }
