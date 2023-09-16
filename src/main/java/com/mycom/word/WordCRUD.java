@@ -29,10 +29,6 @@ public class WordCRUD implements ICRUD{
     }
 
     @Override
-    public int update(Object obj) {
-        return 0;
-    }
-
     public void updateWord() {
         System.out.print("=> 수정할 단어 검색 : ");
         String keyword = s.next();
@@ -48,10 +44,6 @@ public class WordCRUD implements ICRUD{
     }
 
     @Override
-    public int delete(Object obj) {
-        return 0;
-    }
-
     public void deleteWord() {
         System.out.print("=> 삭제할 단어 검색 : ");
         String keyword = s.next();
@@ -67,9 +59,17 @@ public class WordCRUD implements ICRUD{
         } else System.out.println("취소되었습니다. ");
 
     }
-    @Override
-    public void selectOne(int id) {
 
+    public void searchLevel() {
+        System.out.print("=> 원하는 레벨은? (1~3) ");
+        int level = s.nextInt();
+        listAll(level);
+    }
+
+    public void searchWord() {
+        System.out.print("=> 원하는 단어는? ");
+        String word = s.next();
+        listAll(word);
     }
 
     public void listAll() {
@@ -98,6 +98,19 @@ public class WordCRUD implements ICRUD{
         return idlist;
     }
 
+    public void listAll(int level) {
+        int j = 0;
+        System.out.println("--------------------------------");
+        for(int i = 0; i < list.size(); i++) {
+            int inputLevel = list.get(i).getLevel();
+            if(inputLevel == level) continue;
+            System.out.print((j+1) + " ");
+            System.out.println(list.get(i).toString());
+            j++;
+        }
+        System.out.println("--------------------------------");
+    }
+    @Override
     public void loadFile() {
         try {
             BufferedReader myBufferedReader = new BufferedReader(new FileReader("Dictionary.txt"));
@@ -121,7 +134,7 @@ public class WordCRUD implements ICRUD{
             throw new RuntimeException(e);
         }
     }
-
+    @Override
     public void saveFile() {
         try {
             PrintWriter myPrintWriter = new PrintWriter("Dictionary.txt");
